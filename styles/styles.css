@@ -54,11 +54,6 @@ h2 {
     outline: none;
 }
 
-.search-results {
-    columns: 7rem;
-    padding-bottom: 0.75rem;
-}
-
 .today {
     margin-top: 0.75rem;
 }
@@ -69,20 +64,4 @@ h2 {
     justify-content: space-between;
     flex-wrap: wrap;
 }
-
-.five-day-card {
-    flex: 1 1 calc(20% - 1rem);
-    margin: 0.5rem;
-    min-width: 150px;
-}
-
-.history-btn {
-    margin: 5px;
-    padding: 10px;
-    background-color: #007bff;
-    color: #ffffff;
-    border: none;
-    border-radius: 5px;
-}
-
 
