@@ -3,32 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./styles/input.css"/>
-    <link rel="stylesheet" href="./styles/output.css"/>
+    <link rel="stylesheet" href="./styles/styles.css"/>
     <title>Weather Dashboard</title>
 </head>
 
 
 <body>
     
-    <header class="container text-center text-white bg-purple-950 p-2 weather-header">
+    <header class="header">
         <h1>Weather Dashboard</h1>
     </header>
 
-    <div class="container" style="max-width: 1400px">
-        <div class="row-auto">
-            <aside class="columns-3xl pb-3">
-                <h2 id="form-heading" class="mt-1 h-3 form-label">Search for a City:</h2>
-                <form id="search-form" class="form">
-                    <div class="form-inline form-group">
-                        <div class="input-group">
-                            <input class="form-input weather-search" type="text" id="search-input" placeholder="Syracuse" aria-labelledby="form-heading" aria-controls="today forecast"/>
-                            <div class="input-group-append">
-                                <button type="submit" class="btn search-button" id="search-button" aria-label="submit search">Search</button>
-                                <hr class="hr weather-hr"/>
-                            </div>
-                        </div>
-                    </div>
+    <div>
+        <div style="grid-row: auto;">
+            <aside>
+                <h2>Search for a City:</h2>
+                <form>
+                    <input type="text" id="search-input" placeholder="Syracuse" aria-labelledby="form-heading" aria-controls="today forecast"/>
+                        <button type="submit" class="search-btn" aria-label="submit search">Search</button>
+                        <hr class="hr weather-hr"/>
                 </form>
                 <div class="list-group" id="history"></div>
             </aside>

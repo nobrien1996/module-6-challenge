@@ -1,0 +1,29 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.header {
+    background-color: darkslateblue;
+    color: white;
+    padding: 2;
+    container-type: flex;
+    text-align: center;
+}
+
+.container-1 {
+    max-width: 1400px;
+}
+
+aside {
+    columns: calc(0.75rem * var(--tw-space-x-reverse));
+    padding-bottom: 3;
+}
+
+h2 {
+    margin-top: 1;
+    height: 3;
+}
+
+.search-btn {
+    background-color: #3498db;
+}
