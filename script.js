@@ -81,7 +81,7 @@ function renderWeather(city, weather) {
     weatherPic.setAttribute('class', 'weather-img');
     heading.append(weatherPic);
 
-    tempPar.textContent = `Temp: ${temp}°F`;
+    tempPar.textContent = `Temp: ${temp} °F`;
     windPar.textContent = `Wind: ${windSpeed} MPH`;
     humidityPar.textContent = `Humidity: ${humidity} %`;
     cardBody.append(heading, tempPar, windPar, humidityPar);
@@ -90,7 +90,8 @@ function renderWeather(city, weather) {
     todayContainer.append(card);
 }
 
-function renderForecast(forecast) {
+//FORECAST CARD FUNCTION
+function renderForecastCard(forecast) {
     const iconUrl = `https://openweathermap.org/img/w/${forecast.weather[0].icon}.png`;
     const iconDescription = forecast.weather[0].description;
     const temp = forecast.main.temp;
@@ -110,5 +111,116 @@ function renderForecast(forecast) {
     card.append(cardBody);
     cardBody.append(cardTitle, weatherPic, tempPar, windPar, humidityPar);
 
-    col.setAttribute('class', 'columns-md');
+    col.setAttribute('class', 'columns');
+    col.classList.add('five-day-card');
+    card.setAttribute('class', 'card bg-primary h-100 text-white');
+    cardBody.setAttribute('class', 'card-body p-2');
+    cardTitle.setAttribute('class', 'card-title');
+    tempPar.setAttribute('class', 'card-text');
+    windPar.setAttribute('class', 'card-text');
+    humidityPar.setAttribute('class', 'card-text');
+
+    cardTitle.textContent = dayjs(forecast.dt_txt).format('M/D/YY');
+    weatherPic.setAttribute('src', iconUrl);
+    weatherPic.setAttribute('alt', iconDescription);
+    tempPar.textContent = `Temp: ${temp} °F`;
+    windPar.textContent = `Wind: ${windSpeed} MPH`;
+    humidityPar.textContent = `Humidity: ${humidity} %`;
+
+    forecastContainer.append(col);
 }
+
+//DISPLAY 5-DAY FORECAST
+function renderForecast(dailyForecast) {
+    const startDate = dayjs().add(1, 'day').startOf('day').unix();
+    const endDate = dayjs().add(6, 'day').startOf('day').unix();
+    const headingColumn = document.createElement('div');
+    const heading = document.createElement('h4');
+
+    headingColumn.setAttribute('class', 'column-12');
+    heading.textContent = '5-Day Forecast';
+    headingColumn.append(heading);
+
+    forecastContainer.innerHTML = '';
+    forecastContainer.append(headingColumn);
+
+    for (let i = 0; i < dailyForecast.length; i++) {
+        if (dailyForecast[i].dt >= startDate && dailyForecast[i].dt < endDate) {
+            if (dailyForecast[i].dt_txt.slice(11, 13) == '12') {
+                renderForecastCard(dailyForecast[i]);
+            }
+        }
+    }
+}
+
+//RENDER LOCATIONS
+function renderItems(city, data) {
+    renderCurrentWeather(city, data.list[0], data.city.timezone);
+    renderForecast(data.list);
+}
+
+//FETCH AND DISPLAY DATA FOR INDIVIDUAL LOCATION
+function fetchWeather(location) {
+    const {lat} = location;
+    const {lon} = location;
+    const city = location.name;
+
+    const apiUrl = `${weatherApiRootUrl}/data/2.5/forecast?lat=${lat}&lon=${lon}&units=imperial&appid=${WeatherApiKey}`;
+
+    fetch(apiUrl)
+        .then(function (res) {
+            return res.json();
+        })
+        .then(function (data) {
+            renderItems(city, data);
+        })
+        .catch(function (err) {
+            console.error(err);
+        })
+}
+
+function fetchLoc(search) {
+    const apiUrl = `${weatherApiRootUrl}/geo/1.0/direct?q=${search}&limit=5&appid=${WeatherApiKey}`;
+
+    fetch(apiUrl)
+        .then(function (res) {
+            return res.json();
+        })
+        .then(function (data) {
+            if (!data[0]) {
+                alert('Better luck looking for Atlantis');
+            } else {
+                appendHistory(search);
+                fetchWeather(data[0]);
+            }
+        })
+        .catch(function (err) {
+            console.error(err);
+        });
+}
+
+function searchSubmit(e) {
+    if (!searchInput.value) {
+        return;
+    }
+
+    e.preventDefault();
+    const search = searchInput.value.trim();
+    fetchLoc(search);
+    searchInput.value = '';
+}
+
+function searchHistoryClick(e) {
+    if (!e.target.matches('.btn-history')) {
+        return;
+    }
+    const btn = e.target;
+    const search = btn.getAttribute('data-search');
+    fetchLoc(search);
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    initHistory();
+    searchForm.addEventListener('submit', searchSubmit);
+    searchHistoryContainer.addEventListener('click', searchHistoryClick);
+});
