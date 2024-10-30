@@ -24,7 +24,12 @@ function renderSearches() {
         const btn = document.createElement('button');
         btn.setAttribute('type', 'button');
         btn.setAttribute('aria-controls', 'today forecast');
-        btn.classList.add('history-btn', 'btn-history');
+        btn.style.margin = '5px';
+        btn.style.padding = '10px';
+        btn.style.backgroundColor = '#007bff';
+        btn.style.color = '#ffffff';
+        btn.style.border = 'none';
+        btn.style.borderRadius = '5px';
         btn.setAttribute('data-search', searchHistory[i]);
         btn.textContent = searchHistory[i];
         searchHistoryContainer.append(btn);
@@ -67,24 +72,28 @@ function renderWeather(city, weather) {
     const windPar = document.createElement('p');
     const humidityPar = document.createElement('p');
 
-    card.setAttribute('class', 'card');
-    cardBody.setAttribute('class', 'card-body');
-    card.append(cardBody);
-    heading.setAttribute('class', 'h3 card-title');
-    tempPar.setAttribute('class', 'card-text');
-    windPar.setAttribute('class', 'card-text');
-    humidityPar.setAttribute('class', 'card-text');
+    card.style.border = '1px solid #ddd';
+    card.style.borderRadius = '5px';
+    card.style.boxShadow = '0 2px 5px rgba(0, 0, 0, 0.2)';
+    card.style.margin = '10px';
+    card.style.padding = '15px';
+    
+    cardBody.style.padding = '10px';
+    heading.style.fontSize = '1.5em';
+    heading.style.marginBottom = '10px';
 
     heading.textContent = `${city} (${date})`;
     weatherPic.setAttribute('src', iconUrl);
     weatherPic.setAttribute('alt', iconDescription);
-    weatherPic.setAttribute('class', 'weather-img');
+    weatherPic.style.width = '50px'; 
     heading.append(weatherPic);
 
     tempPar.textContent = `Temp: ${temp} °F`;
     windPar.textContent = `Wind: ${windSpeed} MPH`;
     humidityPar.textContent = `Humidity: ${humidity} %`;
+    
     cardBody.append(heading, tempPar, windPar, humidityPar);
+    card.append(cardBody);
 
     todayContainer.innerHTML = '';
     todayContainer.append(card);
@@ -107,18 +116,17 @@ function renderForecastCard(forecast) {
     const windPar = document.createElement('p');
     const humidityPar = document.createElement('p');
 
-    col.classList.add('five-day-card');
-    card.classList.add('card', 'bg-primgary', 'text-white');
-    cardBody.classList.add('card-body', 'p-2')
+    col.style.flex = '1';
+    col.style.margin = '10px';
+    col.style.minWidth = '150px';
 
-    col.setAttribute('class', 'columns');
-    col.classList.add('five-day-card');
-    card.setAttribute('class', 'card bg-primary h-100 text-white');
-    cardBody.setAttribute('class', 'card-body p-2');
-    cardTitle.setAttribute('class', 'card-title');
-    tempPar.setAttribute('class', 'card-text');
-    windPar.setAttribute('class', 'card-text');
-    humidityPar.setAttribute('class', 'card-text');
+    card.style.backgroundColor = '#007bff';
+    card.style.color = '#ffffff';
+    card.style.borderRadius = '5px';
+    card.style.padding = '10px';
+    
+    cardBody.style.padding = '10px';
+    cardTitle.style.fontSize = '1.2em';
 
     cardTitle.textContent = dayjs(forecast.dt_txt).format('M/D/YY');
     weatherPic.setAttribute('src', iconUrl);
@@ -127,9 +135,9 @@ function renderForecastCard(forecast) {
     windPar.textContent = `Wind: ${windSpeed} MPH`;
     humidityPar.textContent = `Humidity: ${humidity} %`;
 
-    col.append(card);
-    card.append(cardBody);
     cardBody.append(cardTitle, weatherPic, tempPar, windPar, humidityPar);
+    card.append(cardBody);
+    col.append(card);
 
     forecastContainer.append(col);
 }
