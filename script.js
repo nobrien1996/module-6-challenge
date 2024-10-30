@@ -24,12 +24,22 @@ function renderSearches() {
         const btn = document.createElement('button');
         btn.setAttribute('type', 'button');
         btn.setAttribute('aria-controls', 'today forecast');
-        btn.style.margin = '5px';
-        btn.style.padding = '10px';
-        btn.style.backgroundColor = '#007bff';
-        btn.style.color = '#ffffff';
-        btn.style.border = 'none';
-        btn.style.borderRadius = '5px';
+        btn.style.marginTop = '5px';
+        btn.style.paddingTop = '10px';
+        btn.style.marginBottom = '5px';
+        btn.style.paddingBottom = '10px';
+        btn.style.backgroundColor = '#A9A9A9';
+        btn.style.color = '#000000';
+        btn.style.border = '1px solid #ccc';
+        btn.style.borderRadius = '4px';
+        btn.style.boxSizing = 'border-box';
+        btn.style.display = "flex";
+        btn.style.flexDirection = 'column';
+        btn.style.alignItems = 'center';
+        btn.style.width = '200%';
+        btn.style.maxWidth = '600px';
+        btn.style.height = '25px';
+        btn.style.fontSize = '16px';
         btn.setAttribute('data-search', searchHistory[i]);
         btn.textContent = searchHistory[i];
         searchHistoryContainer.append(btn);
@@ -72,12 +82,17 @@ function renderWeather(city, weather) {
     const windPar = document.createElement('p');
     const humidityPar = document.createElement('p');
 
+    card.style.display = 'flex';
+    card.style.flexDirection = 'row';
     card.style.border = '1px solid #ddd';
     card.style.borderRadius = '5px';
     card.style.boxShadow = '0 2px 5px rgba(0, 0, 0, 0.2)';
     card.style.margin = '10px';
     card.style.padding = '15px';
+    card.style.width = '100%';
     
+    cardBody.style.display = 'flex';
+    cardBody.style.flexDirection = 'column';
     cardBody.style.padding = '10px';
     heading.style.fontSize = '1.5em';
     heading.style.marginBottom = '10px';
@@ -107,6 +122,8 @@ function renderForecastCard(forecast) {
     const humidity = forecast.main.humidity;
     const windSpeed = forecast.wind.speed;
 
+    const br = document.createAttribute('br');
+    console.log(br);
     const col = document.createElement('div');
     const card = document.createElement('div');
     const cardBody = document.createElement('div');
@@ -116,11 +133,12 @@ function renderForecastCard(forecast) {
     const windPar = document.createElement('p');
     const humidityPar = document.createElement('p');
 
-    col.style.flex = '1';
+    col.style.display = 'flex';
+    col.style.flexDirection = 'row';
     col.style.margin = '10px';
     col.style.minWidth = '150px';
 
-    card.style.backgroundColor = '#007bff';
+    card.style.backgroundColor = '#191970';
     card.style.color = '#ffffff';
     card.style.borderRadius = '5px';
     card.style.padding = '10px';
