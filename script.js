@@ -2,7 +2,7 @@ let searchHistory = [];
 
 //SETTING API INFO
 const weatherApiRootUrl = 'https://api.openweathermap.org';
-const WeatherApiKey = '50b1030cf1dbdda37df102829f6e4c07';
+const WeatherApiKey = '8ac9c5c8f10a09b02e884b106142eb64';
 
 
 //REFERENCES FOR DOM ELEMENTS
@@ -107,9 +107,9 @@ function renderForecastCard(forecast) {
     const windPar = document.createElement('p');
     const humidityPar = document.createElement('p');
 
-    col.append(card);
-    card.append(cardBody);
-    cardBody.append(cardTitle, weatherPic, tempPar, windPar, humidityPar);
+    col.classList.add('five-day-card');
+    card.classList.add('card', 'bg-primgary', 'text-white');
+    cardBody.classList.add('card-body', 'p-2')
 
     col.setAttribute('class', 'columns');
     col.classList.add('five-day-card');
@@ -126,6 +126,10 @@ function renderForecastCard(forecast) {
     tempPar.textContent = `Temp: ${temp} °F`;
     windPar.textContent = `Wind: ${windSpeed} MPH`;
     humidityPar.textContent = `Humidity: ${humidity} %`;
+
+    col.append(card);
+    card.append(cardBody);
+    cardBody.append(cardTitle, weatherPic, tempPar, windPar, humidityPar);
 
     forecastContainer.append(col);
 }
@@ -155,7 +159,7 @@ function renderForecast(dailyForecast) {
 
 //RENDER LOCATIONS
 function renderItems(city, data) {
-    renderCurrentWeather(city, data.list[0], data.city.timezone);
+    renderWeather(city, data.list[0], data.city.timezone);
     renderForecast(data.list);
 }
 
@@ -173,6 +177,7 @@ function fetchWeather(location) {
         })
         .then(function (data) {
             renderItems(city, data);
+            console.log(data);
         })
         .catch(function (err) {
             console.error(err);
@@ -193,6 +198,7 @@ function fetchLoc(search) {
                 appendHistory(search);
                 fetchWeather(data[0]);
             }
+            console.log(data);
         })
         .catch(function (err) {
             console.error(err);
@@ -221,6 +227,10 @@ function searchHistoryClick(e) {
 
 document.addEventListener('DOMContentLoaded', function() {
     initHistory();
+    if (searchForm) {
     searchForm.addEventListener('submit', searchSubmit);
+    }
+    if (searchHistoryContainer) {
     searchHistoryContainer.addEventListener('click', searchHistoryClick);
+    }
 });
